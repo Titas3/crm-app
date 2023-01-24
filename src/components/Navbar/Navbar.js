@@ -1,6 +1,30 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 function NavBar() {
+
+const [isLoggedIn, setLoggedInStatus]=useState(false);
+const navigate = useNavigate()
+
+useEffect(()=>{
+  const value=localStorage.getItem("loggedIn");
+
+  if(value && value=='true'){
+    setLoggedInStatus(true);
+  }else{
+    setLoggedInStatus(false)
+  }
+  
+});
+
+const handleLogOutClick = ()=>{
+localStorage.removeItem('loggedIn')
+navigate("/signin");
+}
+
   return (
     <div>
     <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -22,9 +46,17 @@ function NavBar() {
             <a className="nav-link disabled">Disabled</a>
           </li>
         </ul>
-        <a className='btn btn-success' href='/signup'> Sign Up</a>
+        {
+          !isLoggedIn &&
+          <span><a className='btn btn-success' href='/signup'> Sign Up</a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a className='btn btn-primary' href='/signin'> Sign In</a>
+        <button className='btn btn-primary' onClick={handleLogOutClick} href='/signin'> Sign In</button></span>
+        
+      }
+      {
+        isLoggedIn && 
+        <a className='btn btn-primary' href='/signin'> Sign Out</a>
+      }
       </div>
     </div>
   </nav>
@@ -33,3 +65,6 @@ function NavBar() {
 }
 
 export default NavBar
+
+
+
