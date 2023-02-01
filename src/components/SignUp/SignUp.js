@@ -8,6 +8,7 @@ function SignUp() {
 
   function handleRegister() {
     console.log(user);
+    // fetch returns a promise.
     fetch("http://localhost:4000/api/user/signup", {
       method: "POST",
       headers: {
@@ -16,19 +17,21 @@ function SignUp() {
       body: JSON.stringify(user),
     })
       .then((res) => {
+        // request is completed.
         console.log(res);
         navigate("/signin");
       })
       .catch((err) => {
+        // request has some errors.
         console.log(err);
       });
   }
 
   return (
-    <div className="container">
+    <div className="signup-container">
       <div className="left">
         <img
-          src="https://w7.pngwing.com/pngs/758/35/png-transparent-customer-relationship-management-business-digital-marketing-business-text-trademark-people-thumbnail.png"
+          src="https://img.freepik.com/premium-vector/crm-icons-customer-relationship-management-vector-infographics-template_116137-3703.jpg"
           alt=""
         />
       </div>

@@ -8,6 +8,8 @@ function CustomerForm() {
   const { customerName } = useParams();
   console.log(customerName);
 
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (customerName) {
       fetch("http://localhost:4000/api/customer")
@@ -22,8 +24,6 @@ function CustomerForm() {
         });
     }
   }, []);
-
-  const navigate = useNavigate();
 
   function handleFormSubmit() {
     console.log(customerToUpdate);
@@ -52,7 +52,6 @@ function CustomerForm() {
             Name
           </label>
           <input
-            readOnly="true"
             value={customerToUpdate.name}
             onInput={(e) => {
               let obj = { ...customerToUpdate };
@@ -91,6 +90,7 @@ function CustomerForm() {
             type="number"
             className="form-control"></input>
         </div>
+        
         <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
             No Of Employees
