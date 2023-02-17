@@ -12,23 +12,21 @@ function CustomerForm() {
   const navigate = useNavigate();
   useEffect(() => {
     if (customerName) {
-      fetch("http://localhost:4000/api/customer")
+      fetch(process.env.REACT_APP_APIURL+"customer/"+customerName)
         .then((res) => {
           return res.json();
         })
         .then((res) => {
-          let result = res.find((c) => c.name === customerName);
-          if (result) {
-            setUpdateCustomer(result);
-          }
+          setUpdateCustomer(res);
         });
     }
   }, []);
 
   function handleFormSubmit() {
+
     console.log(customerToUpdate);
-    fetch("http://localhost:4000/api/customer", {
-      method: "POST",
+    fetch(process.env.REACT_APP_APIURL+"customer", {
+      method: customerName ? "PUT" : "POST",
       body: JSON.stringify(customerToUpdate),
       headers: {
         "Content-Type": "application/json",
@@ -90,6 +88,25 @@ function CustomerForm() {
             type="number"
             className="form-control"></input>
         </div>
+
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlInput1" className="form-label">
+            Status
+          </label>
+          <select 
+            onChange={
+              (e)=>{
+                let obj = { ...customerToUpdate };
+                obj.status = e.target.value;
+                setUpdateCustomer(obj);
+              }
+            }
+          className="form-select">
+            <option value="New">New</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
         
         <div className="mb-3">
           <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -137,7 +154,14 @@ function CustomerForm() {
           onClick={handleFormSubmit}
           className="btn btn-primary float-end"
           type="button">
-          Create New Customer
+           {
+            customerName &&
+           <span> Update Customer</span>
+           }
+            {
+            !customerName &&
+           <span> Create New Customer</span>
+           }
         </button>
       </div>
     </div>
