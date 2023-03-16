@@ -38,7 +38,7 @@ function UserList(){
     return(
         <div>
             <NavBar />
-            <SideMenu />
+            {/* <SideMenu /> */}
             <div className="container">
             <a href="/userForm" className="btn btn-success">
                 New User

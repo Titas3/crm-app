@@ -54,7 +54,7 @@ function TicketList(){
     return (
         <div>
             <NavBar />
-            <SideMenu />
+            {/* <SideMenu /> */}
             <TicketDashbaord dashbaordCounts={counts} />
             <div className="container">
            <div className="table-header">
